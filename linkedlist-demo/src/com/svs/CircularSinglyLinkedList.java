@@ -105,6 +105,16 @@ public class CircularSinglyLinkedList<E> {
               .forEach(System.out::println);
     }
 
+    public boolean contains(final E element) {
+        if(isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return Objects.nonNull(element) && Stream.iterate(first, Objects::nonNull, Node::getNext)
+                                              .limit(size)
+                                              .map(Node::getElement)
+                                              .anyMatch(element::equals);
+    }
+
     public static void main(String[] args) {
         final var list = new CircularSinglyLinkedList<String>();
         list.addFirst("A");
@@ -114,6 +124,7 @@ public class CircularSinglyLinkedList<E> {
         list.addFirst("E");
         list.printAll();
         System.out.println("==========");
+        System.out.println(list.contains("C"));
         System.out.println(list.removeFirst());
         System.out.println(list.removeLast());
         System.out.println("==========");
