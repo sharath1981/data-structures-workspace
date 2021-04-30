@@ -50,8 +50,22 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         return elementAt(size-1);
     }
 
-    public E remove() {
-        return removeFirst();
+    public void remove(final E element) {
+        if(isEmpty()) {
+            throw new EmptyStackException();
+        }
+        if(getFirst().equals(element)){
+            removeFirst();
+        }
+        if(Objects.nonNull(element)){
+            Stream.iterate(first, node->Objects.nonNull(node) && Objects.nonNull(node.getNext()) , Node::getNext)
+                  .filter(node->element.equals(node.getNext().getElement()))
+                  .findFirst()
+                  .ifPresent(node->{
+                    node.setNext(node.getNext().getNext());
+                    size--;
+                  });
+        } 
     }
 
     public E removeFirst() {
@@ -141,7 +155,7 @@ public class SinglyLinkedList<E extends Comparable<E>> {
     }
 
     public void addSorted(final E element) {
-        if(Objects.nonNull(element)) {
+        if(Objects.isNull(element)) {
             return;
         }
         if (isEmpty() || first.getElement().compareTo(element) > 0) {
@@ -253,6 +267,9 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         list.addSorted("Y");
         list.addSorted("W");
         list.addSorted("M");
+        list.printAll();
+        System.out.println("================");
+        list.remove("A");
         list.printAll();
     }
 }
