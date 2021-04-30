@@ -123,6 +123,25 @@ public class DoublyLinkedList<E> {
               swapEnds();
     }
 
+    public boolean isPalindrome() {
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+        if(size<2) {
+            return true;
+        }
+        Node<E> next = first; 
+        Node<E> prev = last;
+        while(Objects.nonNull(next)) {
+            if(!next.getItem().equals(prev.getItem())) {
+                return false;
+            }
+            next = next.getNext();
+            prev = prev.getPrev();
+        }
+        return true;
+    }
+
     private void swapEnds() {
         final var node = first;
         first = last;
@@ -208,14 +227,15 @@ public class DoublyLinkedList<E> {
         list.printAll();
         System.out.println("++++++++++++++");
         list.clearAll();
-        list.addLast("A");
-        list.addLast("B");
-        list.addLast("C");
-        list.addLast("D");
-        list.addLast("E");
+        list.addLast("L");
+        list.addLast("I");
+        list.addLast("R");
+        list.addLast("I");
+        list.addLast("L");
         list.printAll();
         System.out.println("++++++++++++++");
-        System.out.println(list.contains("C"));
+        System.out.println(list.contains("I"));
+        System.out.println(list.isPalindrome());
         
     }
 }
