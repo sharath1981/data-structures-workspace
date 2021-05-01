@@ -116,6 +116,28 @@ public class BinarySearchTree<E extends Comparable<E>> {
 		}
 	}
 
+    public E findMinimum() {
+        if(isEmpty()) {
+            return null;
+        }
+        Node<E> left = root;
+        while(Objects.nonNull(left.left)) {
+            left = left.left;
+        }
+        return left.getData();
+    }
+
+    public E findMaximum() {
+        if(isEmpty()) {
+            return null;
+        }
+        Node<E> right = root;
+        while(Objects.nonNull(right.right)) {
+            right = right.right;
+        }
+        return right.getData();
+    }
+
 	public boolean isBST() {
 		return isBST(root);
 	}
@@ -130,7 +152,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         private Node<E> right;
 		private final E data;
 
-		private Node(final E data) {
+        private Node(final E data) {
 			this.data = data;
 		}
 
@@ -148,6 +170,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
         private void setRight(Node<E> right) {
             this.right = right;
+        }
+
+        private E getData() {
+            return data;
         }
 
         @Override
@@ -174,5 +200,8 @@ public class BinarySearchTree<E extends Comparable<E>> {
         tree.postOrder();
         System.out.println();
         tree.levelOrderTraversal();
+        System.out.println();
+        System.out.println(tree.findMinimum());
+        System.out.println(tree.findMaximum());
     }
 }
