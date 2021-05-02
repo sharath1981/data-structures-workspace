@@ -2,6 +2,7 @@ package com.svs;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class BinarySearchTree<E extends Comparable<E>> {
 
@@ -120,11 +121,11 @@ public class BinarySearchTree<E extends Comparable<E>> {
         if(isEmpty()) {
             return null;
         }
-        Node<E> left = root;
-        while(Objects.nonNull(left.left)) {
-            left = left.left;
-        }
-        return left.getData();
+        return Stream.iterate(root, Node::getLeft)
+                     .filter(node->Objects.isNull(node.left))
+                     .findFirst()
+                     .map(Node::getData)
+                     .orElse(null);
     }
 
     public E findMaximum() {
