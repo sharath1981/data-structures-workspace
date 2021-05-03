@@ -139,6 +139,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return right.getData();
     }
 
+    public boolean isLeaf(final Node<E> node) {
+        return Objects.nonNull(node) && Objects.isNull(node.left) && Objects.isNull(node.right);
+    }
+
 	public boolean isBST() {
 		return isBST(root);
 	}
